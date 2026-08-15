@@ -18,6 +18,19 @@ export class FirestoreDictionaryRepository implements DictionaryRepository {
     return snapshot.docs.map((doc) => this.toEntity(doc));
   }
 
+  async findPublishedBySlug(slug: string): Promise<Dictionary | null> {
+    const snapshot = await this.firebase
+      .firestore()
+      .collection('dictionaries')
+      .where('slug', '==', slug)
+      .where('published', '==', true)
+      .limit(1)
+      .get();
+    const doc = snapshot.docs[0];
+    return doc ? this.toEntity(doc) : null;
+  }
+  
+
   private toEntity(doc: QueryDocumentSnapshot<DocumentData>): Dictionary {
     const data = doc.data();
     return {

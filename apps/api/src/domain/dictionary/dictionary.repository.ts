@@ -5,4 +5,6 @@ export const DICTIONARY_REPOSITORY = Symbol('DICTIONARY_REPOSITORY');
 
 export interface DictionaryRepository {
   findPublished(): Promise<Dictionary[]>;
+  findPublishedBySlug(slug: string): Promise<Dictionary | null>;
+
 }
