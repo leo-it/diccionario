@@ -2,6 +2,10 @@
 .env
 .env.*
 !.env.example
+
+# Notas locales / SSH de esta Mac (no van a GitHub)
+INSTRUCCIONES.md
+ssh.config
 node_modules
 dist
 .next
