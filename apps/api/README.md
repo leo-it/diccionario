@@ -11,5 +11,5 @@ Guía completa: [INSTRUCCIONES.md](../../INSTRUCCIONES.md)
 
 ```bash
 pnpm --filter api start:dev
-curl http://localhost:3101/health
+curl http://localhost:3100/health
 ```

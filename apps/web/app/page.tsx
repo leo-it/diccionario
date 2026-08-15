@@ -1,44 +1,35 @@
-const apiUrl = process.env.API_URL ?? "http://localhost:3101";
+import Link from "next/link";
+import { getPublishedDictionaries } from "../lib/api";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function Home() {
-  let health: { status?: string } | null = null;
-  let error: string | null = null;
-
-  try {
-    const res = await fetch(`${apiUrl}/health`, { cache: "no-store" });
-    if (!res.ok) {
-      error = `La API respondió ${res.status}`;
-    } else {
-      health = await res.json();
-    }
-  } catch {
-    error =
-      "No se pudo hablar con Nest. ¿Está corriendo `pnpm dev:api` en el puerto 3101?";
-  }
+  const dictionaries = await getPublishedDictionaries();
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-xl flex-col justify-center gap-4 px-6 font-sans">
-      <p className="text-sm uppercase tracking-wide text-zinc-500">
-        Hito 3 — hop Next → Nest
-      </p>
+    <main className="mx-auto min-h-screen max-w-xl px-6 py-16 font-sans">
       <h1 className="text-3xl font-semibold tracking-tight">
         Diccionario Multidisciplina
       </h1>
-      {health?.status === "ok" ? (
-        <p className="rounded-lg bg-emerald-50 px-4 py-3 text-emerald-800">
-          API status: <strong>{health.status}</strong>
-        </p>
+      <p className="mt-2 text-zinc-600">Elegí un diccionario.</p>
+
+      {dictionaries.length === 0 ? (
+        <p className="mt-8 text-zinc-500">Todavía no hay diccionarios publicados.</p>
       ) : (
-        <p className="rounded-lg bg-amber-50 px-4 py-3 text-amber-900">
-          {error ?? "Estado desconocido"}
-        </p>
+        <ul className="mt-8 space-y-3">
+          {dictionaries.map((d) => (
+            <li key={d.id}>
+              <Link
+                href={`/${d.slug}`}
+                className="block rounded-lg border border-zinc-200 px-4 py-3 hover:bg-zinc-50"
+              >
+                <span className="font-medium">{d.title}</span>
+                <p className="text-sm text-zinc-500">{d.description}</p>
+              </Link>
+            </li>
+          ))}
+        </ul>
       )}
-      <p className="text-sm text-zinc-500">
-        Seguí el resto de los hitos en{" "}
-        <code className="rounded bg-zinc-100 px-1">INSTRUCCIONES.md</code>
-      </p>
     </main>
   );
 }

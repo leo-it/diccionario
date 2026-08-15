@@ -1,10 +1,12 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import * as admin from 'firebase-admin';
+import { App, getApp, getApps, initializeApp } from 'firebase-admin/app';
+import { Auth, getAuth } from 'firebase-admin/auth';
+import { Firestore, getFirestore } from 'firebase-admin/firestore';
 
 @Injectable()
 export class FirebaseService implements OnModuleInit {
-  private app: admin.app.App;
+  private app: App;
 
   constructor(private readonly config: ConfigService) {}
 
@@ -14,9 +16,8 @@ export class FirebaseService implements OnModuleInit {
       throw new Error('Falta FIREBASE_PROJECT_ID en apps/api/.env');
     }
 
-    this.app = admin.apps.length
-      ? admin.app()
-      : admin.initializeApp({ projectId });
+    this.app =
+      getApps().length > 0 ? getApp() : initializeApp({ projectId });
 
     const emulator = this.config.get<string>('FIRESTORE_EMULATOR_HOST');
     console.log(
@@ -24,11 +25,11 @@ export class FirebaseService implements OnModuleInit {
     );
   }
 
-  firestore() {
-    return this.app.firestore();
+  firestore(): Firestore {
+    return getFirestore(this.app);
   }
 
-  auth() {
-    return this.app.auth();
+  auth(): Auth {
+    return getAuth(this.app);
   }
 }

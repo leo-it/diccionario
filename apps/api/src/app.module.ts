@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { HealthController } from './presentation/health/health.controller';
 import { FirebaseModule } from './infrastructure/firebase/firebase.module';
+import { DictionaryModule } from './presentation/dictionary/dictionary.module';
+import { HealthController } from './presentation/health/health.controller';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import { FirebaseModule } from './infrastructure/firebase/firebase.module';
       envFilePath: '.env',
     }),
     FirebaseModule,
+    DictionaryModule,
   ],
   controllers: [HealthController],
 })
