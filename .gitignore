@@ -1,0 +1,16 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+node_modules
+dist
+.next
+*.log
+coverage
+.turbo
+*.tsbuildinfo
+.firebase
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+.emulator-data

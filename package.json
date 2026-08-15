@@ -1,0 +1,12 @@
+{
+  "name": "diccionario",
+  "private": true,
+  "scripts": {
+    "dev:api": "pnpm --filter api start:dev",
+    "dev:web": "pnpm --filter web dev",
+    "emulators": "firebase emulators:start --import=./.emulator-data --export-on-exit=./.emulator-data"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
