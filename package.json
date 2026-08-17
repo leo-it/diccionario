@@ -4,7 +4,8 @@
   "scripts": {
     "dev:api": "pnpm --filter api start:dev",
     "dev:web": "pnpm --filter web dev",
-    "emulators": "bash scripts/emulators.sh"
+    "emulators": "bash scripts/emulators.sh",
+    "seed:tango": "FIRESTORE_EMULATOR_HOST=127.0.0.1:8080 FIREBASE_PROJECT_ID=diccionario-multidisciplina pnpm --filter api exec node scripts/seed-tango.mjs"
   },
   "engines": {
     "node": ">=20"

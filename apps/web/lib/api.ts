@@ -40,6 +40,27 @@ export async function getPublishedTerms(dictionarySlug: string): Promise<Term[] 
   return res.json();
 }
 
+export async function getPublishedTerm(
+  dictionarySlug: string,
+  termSlug: string,
+): Promise<Term | null> {
+  const res = await fetch(
+    `${apiUrl}/dictionaries/${dictionarySlug}/terms/${termSlug}`,
+    { next: { revalidate: 60 } },
+  );
+
+  if (res.status === 404) {
+    return null;
+  }
+
+  if (!res.ok) {
+    throw new Error(
+      `API ${res.status} al pedir /dictionaries/${dictionarySlug}/terms/${termSlug}`,
+    );
+  }
+
+  return res.json();
+}
 
 export async function getPublishedDictionaryBySlug(
   slug: string,
