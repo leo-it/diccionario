@@ -4,10 +4,21 @@ import { ListPublishedDictionariesUseCase } from '../../application/dictionary/l
 import { DICTIONARY_REPOSITORY } from '../../domain/dictionary/dictionary.repository';
 import { FirestoreDictionaryRepository } from '../../infrastructure/firebase/firestore-dictionary.repository';
 import { DictionaryController } from './dictionary.controller';
+import { ListPublishedTermsByDictionarySlugUseCase } from '../../application/term/list-published-terms-by-dictionary-slug.use-case';
+import { TERM_REPOSITORY } from '../../domain/term/term.repository';
+import { GetPublishedTermBySlugsUseCase } from '../../application/term/get-published-term-by-slugs.use-case';
+import { FirestoreTermRepository } from '../../infrastructure/firebase/firestore-term.repository';
 
 @Module({
   controllers: [DictionaryController],
   providers: [
+    ListPublishedTermsByDictionarySlugUseCase,
+    GetPublishedTermBySlugsUseCase,
+    {
+      provide: TERM_REPOSITORY,
+      useClass: FirestoreTermRepository,
+    },
+
     ListPublishedDictionariesUseCase,
     GetPublishedDictionaryBySlugUseCase,
     {
@@ -16,4 +27,4 @@ import { DictionaryController } from './dictionary.controller';
     },
   ],
 })
-export class DictionaryModule {}
+export class DictionaryModule { }

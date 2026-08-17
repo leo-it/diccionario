@@ -9,6 +9,16 @@ export type Dictionary = {
   published: boolean;
 };
 
+export type Term = {
+  id: string;
+  dictionaryId: string;
+  lemma: string;
+  slug: string;
+  definition: string;
+  videoUrl?: string;
+  published: boolean;
+};
+
 export async function getPublishedDictionaries(): Promise<Dictionary[]> {
   const res = await fetch(`${apiUrl}/dictionaries`, {
     next: { revalidate: 60 },
@@ -20,6 +30,16 @@ export async function getPublishedDictionaries(): Promise<Dictionary[]> {
 
   return res.json();
 }
+
+export async function getPublishedTerms(dictionarySlug: string): Promise<Term[] | null> {
+  const res = await fetch(`${apiUrl}/dictionaries/${dictionarySlug}/terms`, {
+    next: { revalidate: 60 },
+  });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API ${res.status}`);
+  return res.json();
+}
+
 
 export async function getPublishedDictionaryBySlug(
   slug: string,

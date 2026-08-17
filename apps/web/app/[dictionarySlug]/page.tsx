@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPublishedDictionaryBySlug } from "../../lib/api";
+import { getPublishedDictionaryBySlug, getPublishedTerms } from "@/lib/api";
 
 export const revalidate = 60;
 
@@ -25,9 +25,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function DictionaryPage({ params }: Props) {
   const { dictionarySlug } = await params;
-  const dictionary = await getPublishedDictionaryBySlug(dictionarySlug);
+  const [dictionary, terms] = await Promise.all([
+    getPublishedDictionaryBySlug(dictionarySlug),
+    getPublishedTerms(dictionarySlug),
+  ]);
 
-  if (!dictionary) {
+  if (!dictionary || terms === null) {
     notFound();
   }
 
@@ -40,6 +43,22 @@ export default async function DictionaryPage({ params }: Props) {
         {dictionary.title}
       </h1>
       <p className="mt-2 text-zinc-600">{dictionary.description}</p>
+      {terms.length === 0 ? (
+        <p className="mt-8 text-zinc-500">Todavía no hay términos.</p>
+      ) : (
+        <ul className="mt-8 space-y-2">
+          {terms.map((t) => (
+            <li key={t.id}>
+              <Link
+                href={`/${dictionarySlug}/${t.slug}`}
+                className="text-zinc-800 underline-offset-2 hover:underline"
+              >
+                {t.lemma}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </main>
   );
 }
