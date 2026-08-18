@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GetPublishedDictionaryBySlugUseCase } from '../../application/dictionary/get-published-dictionary-by-slug.use-case';
+import { ListAllDictionariesUseCase } from '../../application/dictionary/list-all-dictionaries.use-case';
 import { ListPublishedDictionariesUseCase } from '../../application/dictionary/list-published-dictionaries.use-case';
 import { DICTIONARY_REPOSITORY } from '../../domain/dictionary/dictionary.repository';
 import { FirestoreDictionaryRepository } from '../../infrastructure/firebase/firestore-dictionary.repository';
@@ -20,11 +21,13 @@ import { FirestoreTermRepository } from '../../infrastructure/firebase/firestore
     },
 
     ListPublishedDictionariesUseCase,
+    ListAllDictionariesUseCase,
     GetPublishedDictionaryBySlugUseCase,
     {
       provide: DICTIONARY_REPOSITORY,
       useClass: FirestoreDictionaryRepository,
     },
   ],
+  exports: [ListAllDictionariesUseCase],
 })
-export class DictionaryModule { }
+export class DictionaryModule {}

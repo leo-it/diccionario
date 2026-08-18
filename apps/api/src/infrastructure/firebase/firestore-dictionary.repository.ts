@@ -29,7 +29,15 @@ export class FirestoreDictionaryRepository implements DictionaryRepository {
     const doc = snapshot.docs[0];
     return doc ? this.toEntity(doc) : null;
   }
-  
+
+  async findAll(): Promise<Dictionary[]> {
+    const snapshot = await this.firebase
+      .firestore()
+      .collection('dictionaries')
+      .get();
+
+    return snapshot.docs.map((doc) => this.toEntity(doc));
+  }
 
   private toEntity(doc: QueryDocumentSnapshot<DocumentData>): Dictionary {
     const data = doc.data();
