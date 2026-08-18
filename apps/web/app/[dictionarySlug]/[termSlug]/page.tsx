@@ -37,17 +37,12 @@ export default async function TermPage({ params }: Props) {
   }
 
   return (
-    <main className="mx-auto min-h-screen max-w-xl px-6 py-16 font-sans">
-      <Link
-        href={`/${dictionarySlug}`}
-        className="text-sm text-zinc-500 hover:text-zinc-800"
-      >
-        ← {dictionary.title}
+    <main className="site-main">
+      <Link href={`/${dictionarySlug}`} className="back-link">
+        ← Volver a {dictionary.title}
       </Link>
-      <h1 className="mt-4 text-3xl font-semibold tracking-tight">
-        {term.lemma}
-      </h1>
-      <div className="mt-4 space-y-3 text-zinc-700 [&_a]:underline [&_a]:underline-offset-2 [&_code]:rounded [&_code]:bg-zinc-100 [&_code]:px-1 [&_h2]:mt-6 [&_h2]:text-xl [&_h2]:font-semibold [&_h3]:mt-4 [&_h3]:text-lg [&_h3]:font-semibold [&_ol]:list-decimal [&_ol]:pl-5 [&_pre]:overflow-x-auto [&_pre]:rounded [&_pre]:bg-zinc-100 [&_pre]:p-3 [&_ul]:list-disc [&_ul]:pl-5">
+      <h1 className="lemma">{term.lemma}</h1>
+      <div className="prose-term">
         <Markdown>{term.definition}</Markdown>
       </div>
       {term.videoUrl ? (

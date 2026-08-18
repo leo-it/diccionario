@@ -133,6 +133,78 @@ Típico al centro de un giro o molinete.
 Quien marca suele hacer **disociación** (pecho hacia la pareja, cadera más quieta).
 `,
   },
+  {
+    lemma: "helicóptero recto en barras paralelas",
+    slug: "helicoptero-recto-barras-paralelas",
+    videoUrl: "https://www.youtube.com/watch?v=186AiDRPRhw",
+    definition: `Giro tipo **helicóptero** con el eje derecho, en un corredor de barras paralelas: no se abre el abrazo ni se sale de la línea.
+
+El pivote sale del torso; las piernas acompañan sin perder el piso.
+`,
+  },
+  {
+    lemma: "ochos atrás con entrada y helicóptero",
+    slug: "ochos-atras-entrada-helicoptero",
+    videoUrl: "https://www.youtube.com/watch?v=7VjjgrRX8xk",
+    definition: `Ochos **atrás** de quien es llevado, con entrada de quien marca, y resolución en helicóptero.
+
+La entrada no empuja: ocupa el espacio que deja el ocho.
+`,
+  },
+  {
+    lemma: "caminata con pataditas, cruces y saludos",
+    slug: "caminata-pataditas-cruces-saludos",
+    videoUrl: "https://www.youtube.com/watch?v=lltbaVyagUs",
+    definition: `Caminata adornada: **pataditas**, cruces y saludos, en tiempo lento y rápido.
+
+El adorno no cambia el peso; la caminata sigue clara para la pareja.
+`,
+  },
+  {
+    lemma: "pivotito, molinete en línea y acento lateral",
+    slug: "pivotito-molinete-acento-lateral",
+    videoUrl: "https://www.youtube.com/watch?v=Ulm03TRU4KM",
+    definition: `Un **pivotito** abre un molinete que viaja en línea, con acento al costado.
+
+Útil en pista estrecha: el giro no come el círculo entero.
+`,
+  },
+  {
+    lemma: "lápiz, punteo atrás y paso lateral",
+    slug: "lapiz-punteo-atras-paso-lateral",
+    videoUrl: "https://www.youtube.com/watch?v=TNAhtHbNXRU",
+    definition: `**Lápiz** (círculo de la punta en el piso), punteo atrás y salida en paso lateral.
+
+El lápiz dibuja sin cargar peso en esa pierna.
+`,
+  },
+  {
+    lemma: "ocho atrás de la mujer",
+    slug: "ocho-atras-mujer",
+    videoUrl: "https://www.youtube.com/watch?v=Rphp5slnjzM",
+    definition: `Ocho **atrás** de quien es llevado: pivote y paso atrás cruzando el eje de quien marca.
+
+La disociación del pecho marca el pivote; no se tira del brazo.
+`,
+  },
+  {
+    lemma: "lápiz y paso lateral",
+    slug: "lapiz-paso-lateral",
+    videoUrl: "https://www.youtube.com/watch?v=DCxAbOJ2Xyc",
+    definition: `Lápiz que resuelve en un **paso al costado**, sin cortar el abrazo.
+
+Variante más corta que lápiz + punteo atrás + lateral.
+`,
+  },
+  {
+    lemma: "amague con cruce y punteo",
+    slug: "amague-cruce-punteo",
+    videoUrl: "https://www.youtube.com/watch?v=rFU9udWcqsw",
+    definition: `**Amague** (se finge un paso y se cambia), cruce, y punteo o patada adelante y atrás.
+
+El amague vive en el torso; la patada es adorno, no traslado.
+`,
+  },
 ];
 
 function lemmaLower(lemma) {

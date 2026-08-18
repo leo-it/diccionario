@@ -1,20 +1,25 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Atkinson_Hyperlegible, Fraunces } from "next/font/google";
+import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const sans = Atkinson_Hyperlegible({
+  weight: ["400", "700"],
   subsets: ["latin"],
+  variable: "--font-atkinson",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const display = Fraunces({
   subsets: ["latin"],
+  variable: "--font-fraunces",
 });
 
 export const metadata: Metadata = {
-  title: "Diccionario Multidisciplina",
-  description: "Plataforma de diccionarios (Tango, Circo y más)",
+  title: {
+    default: "Diccionario Multidisciplina",
+    template: "%s · Multidisciplina",
+  },
+  description: "Léxico de tango, circo y otras disciplinas.",
 };
 
 export default function RootLayout({
@@ -24,9 +29,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${sans.variable} ${display.variable}`}>
+        <SiteHeader />
         {children}
       </body>
     </html>

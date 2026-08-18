@@ -58,7 +58,7 @@ export function VideoEmbed({ url, title }: VideoEmbedProps) {
       : `https://player.vimeo.com/video/${video.id}`;
 
   return (
-    <div className="mt-8 aspect-video overflow-hidden rounded-lg bg-zinc-100">
+    <div className="video-frame">
       <iframe
         src={src}
         title={title}

@@ -11,13 +11,6 @@ import { auth } from "@/lib/firebase";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3101";
 
-const fieldClass =
-  "mt-1 w-full rounded-lg border-2 border-zinc-800 bg-white px-3 py-3 text-lg text-zinc-950";
-const primaryBtn =
-  "min-h-11 rounded-lg bg-zinc-950 px-4 py-3 text-base font-semibold text-white disabled:opacity-60";
-const secondaryBtn =
-  "min-h-11 rounded-lg border-2 border-zinc-950 bg-white px-4 py-3 text-base font-semibold text-zinc-950 disabled:opacity-60";
-
 type Probe = {
   status: number;
   body: unknown;
@@ -98,16 +91,16 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="mx-auto min-h-screen max-w-xl bg-white px-6 py-16 font-sans text-zinc-950">
-      <h1 className="text-3xl font-semibold tracking-tight">Admin</h1>
-      <p className="mt-2 text-lg text-zinc-800">
-        Primera vez: completá email y contraseña y apretá{" "}
-        <strong>Crear cuenta</strong>. Auth corre en el emulator, no en
-        producción.
+    <main className="site-main">
+      <p className="kicker">Backoffice</p>
+      <h1 className="lemma">Entrar</h1>
+      <p className="lede">
+        Primera vez: email, contraseña de 6+ caracteres y{" "}
+        <strong>Crear cuenta</strong>. Auth corre en el emulator.
       </p>
 
-      <form onSubmit={onCreate} className="mt-8 space-y-4">
-        <label className="block text-base font-medium text-zinc-950">
+      <form onSubmit={onCreate} className="mt-10">
+        <label className="field">
           Email
           <input
             type="email"
@@ -115,11 +108,10 @@ export default function AdminLoginPage() {
             autoComplete="username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className={fieldClass}
           />
         </label>
-        <label className="block text-base font-medium text-zinc-950">
-          Contraseña (mínimo 6 caracteres)
+        <label className="field">
+          Contraseña
           <input
             type="password"
             required
@@ -127,11 +119,10 @@ export default function AdminLoginPage() {
             autoComplete="new-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className={fieldClass}
           />
         </label>
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <button type="submit" disabled={busy} className={primaryBtn}>
+        <div className="actions">
+          <button type="submit" disabled={busy} className="btn btn-primary">
             {busy ? "Esperá…" : "Crear cuenta"}
           </button>
           <button
@@ -140,7 +131,7 @@ export default function AdminLoginPage() {
             onClick={() =>
               void run(() => signInWithEmailAndPassword(auth, email, password))
             }
-            className={secondaryBtn}
+            className="btn btn-secondary"
           >
             Ya tengo cuenta
           </button>
@@ -153,24 +144,21 @@ export default function AdminLoginPage() {
         onClick={() =>
           void run(() => signInWithPopup(auth, new GoogleAuthProvider()))
         }
-        className={`${secondaryBtn} mt-4`}
+        className="btn btn-secondary mt-4"
       >
         Continuar con Google
       </button>
 
       {error ? (
-        <p
-          role="alert"
-          className="mt-6 rounded-lg border-2 border-zinc-950 bg-amber-200 px-4 py-3 text-base text-zinc-950"
-        >
+        <p role="alert" className="alert">
           {error}
         </p>
       ) : null}
 
       {uid ? (
-        <div className="mt-8 rounded-lg border-2 border-zinc-950 bg-zinc-50 p-4 text-base text-zinc-950">
+        <div className="panel">
           <p>
-            uid: <code className="break-all">{uid}</code>
+            uid: <code>{uid}</code>
           </p>
           <p className="mt-2">GET /admin/me: {probe?.status}</p>
           <pre className="mt-2 overflow-x-auto">
@@ -183,8 +171,15 @@ export default function AdminLoginPage() {
               ir vacío). Después usá «Ya tengo cuenta».
             </p>
           ) : null}
+          {probe?.status === 200 ? (
+            <p className="mt-3">
+              Listo: Nest te reconoce como admin. El panel de diccionarios
+              viene en el próximo paso.
+            </p>
+          ) : null}
         </div>
       ) : null}
     </main>
   );
 }
+

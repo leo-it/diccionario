@@ -35,23 +35,21 @@ export default async function DictionaryPage({ params }: Props) {
   }
 
   return (
-    <main className="mx-auto min-h-screen max-w-xl px-6 py-16 font-sans">
-      <Link href="/" className="text-sm text-zinc-500 hover:text-zinc-800">
+    <main className="site-main">
+      <Link href="/" className="back-link">
         ← Todos los diccionarios
       </Link>
-      <h1 className="mt-4 text-3xl font-semibold tracking-tight">
-        {dictionary.title}
-      </h1>
-      <p className="mt-2 text-zinc-600">{dictionary.description}</p>
+      <h1 className="lemma">{dictionary.title}</h1>
+      <p className="lede">{dictionary.description}</p>
       {terms.length === 0 ? (
-        <p className="mt-8 text-zinc-500">Todavía no hay términos.</p>
+        <p className="empty">Todavía no hay términos.</p>
       ) : (
-        <ul className="mt-8 space-y-2">
+        <ul className="term-list">
           {terms.map((t) => (
             <li key={t.id}>
               <Link
                 href={`/${dictionarySlug}/${t.slug}`}
-                className="text-zinc-800 underline-offset-2 hover:underline"
+                className="term-row"
               >
                 {t.lemma}
               </Link>
