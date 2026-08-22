@@ -1,6 +1,13 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { App, getApp, getApps, initializeApp } from 'firebase-admin/app';
+import {
+  App,
+  cert,
+  getApp,
+  getApps,
+  initializeApp,
+  type ServiceAccount,
+} from 'firebase-admin/app';
 import { Auth, getAuth } from 'firebase-admin/auth';
 import { Firestore, getFirestore } from 'firebase-admin/firestore';
 
@@ -13,11 +20,14 @@ export class FirebaseService implements OnModuleInit {
   onModuleInit() {
     const projectId = this.config.get<string>('FIREBASE_PROJECT_ID');
     if (!projectId) {
-      throw new Error('Falta FIREBASE_PROJECT_ID en apps/api/.env');
+      throw new Error('Falta FIREBASE_PROJECT_ID');
     }
 
-    this.app =
-      getApps().length > 0 ? getApp() : initializeApp({ projectId });
+    if (getApps().length > 0) {
+      this.app = getApp();
+    } else {
+      this.app = initializeApp(this.buildOptions(projectId));
+    }
 
     const emulator = this.config.get<string>('FIRESTORE_EMULATOR_HOST');
     console.log(
@@ -31,5 +41,29 @@ export class FirebaseService implements OnModuleInit {
 
   auth(): Auth {
     return getAuth(this.app);
+  }
+
+  private buildOptions(projectId: string) {
+    const emulator = this.config.get<string>('FIRESTORE_EMULATOR_HOST');
+    if (emulator) {
+      return { projectId };
+    }
+
+    const raw = this.config.get<string>('FIREBASE_SERVICE_ACCOUNT');
+    if (!raw) {
+      throw new Error('Falta FIREBASE_SERVICE_ACCOUNT');
+    }
+
+    let serviceAccount: ServiceAccount;
+    try {
+      serviceAccount = JSON.parse(raw) as ServiceAccount;
+    } catch {
+      throw new Error('FIREBASE_SERVICE_ACCOUNT inválido');
+    }
+
+    return {
+      projectId,
+      credential: cert(serviceAccount),
+    };
   }
 }
